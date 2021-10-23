@@ -44,10 +44,11 @@ const Map = () => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-  const [Bins, setBins] = React.useState([]);
+  const [bins, setBins] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
 
   const onMapClick = React.useCallback((e) => {
+    // FORM to get data
     setBins((current) => [
       ...current,
       {
@@ -56,6 +57,7 @@ const Map = () => {
         time: new Date(),
       },
     ]);
+    // DATA TO FIREBASE
   }, []);
 
   const mapRef = React.useRef();
@@ -73,7 +75,7 @@ const Map = () => {
 
   return (
     <div>
-      <h1>Bins </h1>
+      <h1>Bins</h1>
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
@@ -87,7 +89,8 @@ const Map = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {Bins.map((marker) => (
+        {bins.map((marker) => (
+          // DATA FROM FIREBASE
           <Marker
             key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}
@@ -110,11 +113,12 @@ const Map = () => {
               setSelected(null);
             }}
           >
-            <div>
+            <div class="binInfoContent">
               <h2>Recycling Bin</h2>
               <h3>What you can put in it:</h3>
               <p>cardboard, paper, plastic</p>
               <p>Found {formatRelative(selected.time, new Date())}</p>
+              <button className="deleteButton">Delete</button>
             </div>
           </InfoWindow>
         ) : null}
