@@ -5,13 +5,13 @@ import {
   signInWithEmailAndPassword,
   signInWithGoogle,
 } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { useAuthState } from "react-firebase-hooks/auth";
 import "./SignIn.css";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  // const [user, loading, error] = useAuthState(auth);
   const history = useHistory();
 
   return <div></div>;
