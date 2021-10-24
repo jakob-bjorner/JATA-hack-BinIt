@@ -1,11 +1,15 @@
-import React from 'react';
-import './App.css';
+import { React } from 'react';
 
-function AddBinsPage() {
+
+
+
+
+const AddBinsPage = () => {
     return (
         <div>
-            <h1>INSERT RECYCLING TYPES</h1>
+
         </div>
-    );
+    )
 }
+
 export default AddBinsPage;

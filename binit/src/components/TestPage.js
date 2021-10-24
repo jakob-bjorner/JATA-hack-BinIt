@@ -6,6 +6,8 @@ const TestPage = () => {
   return (
     <div>
       <Map />
+      
+      <SignInButton />
     </div>
   );
 };

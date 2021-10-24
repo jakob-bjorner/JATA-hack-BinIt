@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import mapStyles from './mapStyles';
+import Form from './Form'
 
 import { db } from '../firebase-config';
 import { collection, getDocs } from '@firebase/firestore';
@@ -46,6 +47,7 @@ const center = {
 };
 
 const Map = () => {
+  const [recycleType, setRecycleType] = useState();
   //state for bins already loaded from firebase
   const [binsLoaded, setBinsLoaded] = useState([]);
   const binsCollectionRef = collection(db, 'bins');
@@ -167,6 +169,7 @@ const Map = () => {
           </Marker>
         ))}
       </GoogleMap>
+      <Form props={setRecycleType}></Form>
     </div>
   );
 };
@@ -225,6 +228,7 @@ function Search({ panTo }) {
 
   return (
     <div className="search">
+      
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
@@ -242,6 +246,7 @@ function Search({ panTo }) {
         </ComboboxPopover>
       </Combobox>
     </div>
+    
   );
 }
 
