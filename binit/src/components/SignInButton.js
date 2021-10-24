@@ -1,19 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import {
-  auth,
-  signInWithEmailAndPassword,
-  signInWithGoogle,
-} from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import "./SignIn.css";
-import SignIn from "./SignIn";
+import React from "react";
+
 const SignInButton = () => {
-  return (
-    <div>
-      <SignIn />
-    </div>
-  );
+  return <div>Button Sign In</div>;
 };
 
 export default SignInButton;
