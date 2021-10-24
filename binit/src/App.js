@@ -9,17 +9,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="App" style={{ display: "flex", flexDirection: "column" }}>
         {/* <TestPage /> */}
-        <div>
-          <Nav />
-        </div>
+        <Nav />
         {/* <Nav /> */}
-
-        <Switch>
-          <Route path="/" exact component={FindBinsPage} />
-          <Route path="/addbins" component={AddBinsPage} />
-        </Switch>
+        <div style={{ height: "40vh" }}>
+          <Switch>
+            <Route path="/" exact component={FindBinsPage} />
+            <Route path="/addbins" component={AddBinsPage} />
+          </Switch>
+        </div>
       </div>
     </Router>
   );

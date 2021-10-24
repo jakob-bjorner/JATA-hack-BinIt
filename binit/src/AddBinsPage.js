@@ -3,9 +3,9 @@ import Map from "./components/Map";
 
 const AddBinsPage = () => {
   return (
-    <div>
+    <>
       <Map />
-    </div>
+    </>
   );
 };
 

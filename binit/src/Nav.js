@@ -26,29 +26,42 @@ function Nav() {
   }
 
   return (
-    <nav>
-      <container className="nav-links">
-        <img alt="recycling icon" className="logo" src="Logo.png" />
-
-        <Link to="/">
-          <button
-            style={{ backgroundColor: findBinsButtonColor }}
-            className="find-bins-button btn"
-            onClick={changeFindButtonColor}
-          >
-            Find Bins
-          </button>
-        </Link>
-        <Link to="/addbins">
-          <button
-            style={{ backgroundColor: addBinsButtonColor }}
-            className="add-bins-button btn"
-            onClick={changeAddButtonColor}
-          >
-            Add Bins
-          </button>
-        </Link>
-      </container>
+    <nav style={{ width: "100%" }}>
+      <div
+        className="nav-top"
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          margin: "10px",
+        }}
+      >
+        <img
+          alt="recycling icon"
+          className="logo"
+          src="Logo.png"
+          //   style={{ position: "absolute", left: "10px", top: "10px" }}
+        />
+        <div className="nav-links" style={{ height: "100px" }}>
+          <Link to="/">
+            <button
+              style={{ backgroundColor: findBinsButtonColor }}
+              className="find-bins-button btn"
+              onClick={changeFindButtonColor}
+            >
+              Find Bins
+            </button>
+          </Link>
+          <Link to="/addbins">
+            <button
+              style={{ backgroundColor: addBinsButtonColor }}
+              className="add-bins-button btn"
+              onClick={changeAddButtonColor}
+            >
+              Add Bins
+            </button>
+          </Link>
+        </div>
+      </div>
     </nav>
   );
 }

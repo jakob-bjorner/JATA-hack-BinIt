@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import mapStyles from './mapStyles';
-import Form from './Form'
+import React, { useState, useEffect } from "react";
+import mapStyles from "./mapStyles";
+import Form from "./Form";
 
-import {FormControlLabel, Checkbox, Button} from '@mui/material';
-import { db } from '../firebase-config';
-import { collection, getDocs } from '@firebase/firestore';
+import { FormControlLabel, Checkbox, Button } from "@mui/material";
+import { db } from "../firebase-config";
+import { collection, getDocs } from "@firebase/firestore";
 
-import { createBin, deleteBin } from '../services/bin-service';
+import { createBin, deleteBin } from "../services/bin-service";
 
-import { GeoPoint } from '@firebase/firestore';
+import { GeoPoint } from "@firebase/firestore";
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
-} from '@react-google-maps/api';
+} from "@react-google-maps/api";
 
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
-} from 'use-places-autocomplete';
+} from "use-places-autocomplete";
 import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
   ComboboxList,
   ComboboxOption,
-} from '@reach/combobox';
+} from "@reach/combobox";
 
-import '@reach/combobox/styles.css';
-import { Firestore } from '@firebase/firestore';
+import "@reach/combobox/styles.css";
+import { Firestore } from "@firebase/firestore";
 
-const libraries = ['places'];
+const libraries = ["places"];
 const mapContainerStyle = {
-  height: '100vh',
-  width: '100vw',
+  height: "100vh",
+  width: "100vw",
 };
 const options = {
   styles: mapStyles,
@@ -48,28 +48,27 @@ const center = {
 
 const Map = () => {
   const [checkboxes, setCheckboxes] = useState({
-        "Paper" : false,
-        "Glass" : false,
-        "Plastic" : false
-    });
-    
+    Paper: false,
+    Glass: false,
+    Plastic: false,
+    Metal: false,
+    Other: false,
+  });
+
   const handleChange = (event) => {
-        setCheckboxes({
-            ...checkboxes,
-            [event.target.name]: event.target.checked,
-        });
-    };
+    setCheckboxes({
+      ...checkboxes,
+      [event.target.name]: event.target.checked,
+    });
+  };
 
   const submit = (event) => {
-      
-  }
+    console.log(checkboxes);
+  };
 
-  const {Paper, Glass, Other} = checkboxes;
-
-  
   //state for bins already loaded from firebase
   const [binsLoaded, setBinsLoaded] = useState([]);
-  const binsCollectionRef = collection(db, 'bins');
+  const binsCollectionRef = collection(db, "bins");
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -100,7 +99,14 @@ const Map = () => {
 
   const onMapClick = React.useCallback(
     (e) => {
-      createB(0, e.latLng.lat(), e.latLng.lng(), 'everything', new Date(), 0);
+      const available = Object.keys(checkboxes)
+        .filter((box) => {
+          console.log(checkboxes[box]);
+          return checkboxes[box];
+        })
+        .join(", ");
+      console.log(available);
+      createB(0, e.latLng.lat(), e.latLng.lng(), available, new Date(), 0);
       setBins((current) => [
         ...current,
         {
@@ -111,7 +117,7 @@ const Map = () => {
       ]);
       setLoad(!load);
     },
-    [load]
+    [load, checkboxes]
   );
 
   const onDeleteClick = async () => {
@@ -132,17 +138,19 @@ const Map = () => {
     mapRef.current.setZoom(18);
   }, []);
 
-  if (loadError) return 'Error';
-  if (!isLoaded) return 'Loading...';
+  if (loadError) return "Error";
+  if (!isLoaded) return "Loading...";
 
-   
-    
   return (
-    <div>
-      <h1>Bins</h1>
-
-      <Locate panTo={panTo} />
-      <Search panTo={panTo} />
+    <div style={{ height: "10vh" }}>
+      {/* <Locate
+        panTo={panTo}
+        style={{ position: "absolute", top: "100px", right: "10px" }}
+      />
+      <Search
+        panTo={panTo}
+        style={{ position: "absolute", top: "100px", right: "10px" }}
+      /> */}
 
       <GoogleMap
         id="map"
@@ -172,12 +180,15 @@ const Map = () => {
           >
             {selected === bin ? (
               <InfoWindow
-                position={{ lat: selected.lat, lng: selected.lng }}
+                position={{
+                  lat: Number(selected.lat),
+                  lng: Number(selected.lng),
+                }}
                 onCloseClick={() => {
                   setSelected(null);
                 }}
               >
-                <div class="binInfoContent">
+                <div className="binInfoContent">
                   <h2>Recycling Bin</h2>
                   <h3>What you can put in it:</h3>
                   <p>{bin.recyclingMaterial}</p>
@@ -190,33 +201,25 @@ const Map = () => {
           </Marker>
         ))}
       </GoogleMap>
-        
-        <div>
-            <FormControlLabel
-                control={
-                <Checkbox checked={Paper} onChange={handleChange} name="Paper" />
-                }
-                label="Paper"
-            />
 
-            <FormControlLabel
-                control={
-                <Checkbox checked={Glass} onChange={handleChange} name="Glass" />
-                }
-                label="Glass"
-            />
+      <div>
+        {Object.keys(checkboxes).map((type) => (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checkboxes[type]}
+                onChange={handleChange}
+                name={type}
+              />
+            }
+            label={type}
+          />
+        ))}
+      </div>
 
-            <FormControlLabel
-                control={
-                <Checkbox checked={Other} onChange={handleChange} name="Other" />
-                }
-                label="Other"
-            />
-            </div>
-            
-            <Button color="primary" variant= "contained" onClick={submit}>Submit</Button>
-            
-        
+      {/* <Button color="primary" variant="contained" onClick={submit}>
+        Submit
+      </Button> */}
     </div>
   );
 };
@@ -269,13 +272,12 @@ function Search({ panTo }) {
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
     } catch (error) {
-      console.log('Error: ', error);
+      console.log("Error: ", error);
     }
   };
 
   return (
     <div className="search">
-      
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
@@ -285,7 +287,7 @@ function Search({ panTo }) {
         />
         <ComboboxPopover>
           <ComboboxList>
-            {status === 'OK' &&
+            {status === "OK" &&
               data.map(({ id, description }) => (
                 <ComboboxOption key={id} value={description} />
               ))}
@@ -293,7 +295,6 @@ function Search({ panTo }) {
         </ComboboxPopover>
       </Combobox>
     </div>
-    
   );
 }
 

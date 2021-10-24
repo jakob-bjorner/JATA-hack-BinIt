@@ -1,8 +1,11 @@
 .App {
   text-align: center;
   background-color: #c1cfa0;
+  /* position: relative; */
 }
-
+#map {
+  height: 70vh !important;
+}
 nav {
 }
 @font-face {
@@ -11,10 +14,10 @@ nav {
 }
 
 .logo {
-  margin-top: 2vh;
-  margin-left: 3vh;
+  /* margin-top: 2vh;
+  margin-left: 3vh; */
   height: 17vh;
-  flex: start;
+  /* flex: start; */
   animation: rotation 10s infinite linear;
 }
 @keyframes rotation {
@@ -28,21 +31,21 @@ nav {
 
 .btn {
   border-color: #242914;
-  /* width: 40%; */
   font-family: Akira;
-  font-size: 5vh;
+  font-size: 5vw;
   color: #242914;
   background-color: #515f30;
   border-radius: 10px;
   border-width: 5px;
+  margin: 5px;
 }
 .find-bins-button {
 }
 .nav-links {
-  display: flex;
-  justify-content: space-around;
+  /* display: flex; */
+  justify-content: space-between;
   align-items: center;
-  /* flex-direction: space-around; */
+  flex-direction: space-around;
   width: 100%;
   height: 100%;
   padding: 10px;

@@ -1,5 +1,6 @@
 export default [
   {
+    
     featureType: 'all',
     elementType: 'geometry.fill',
     stylers: [
