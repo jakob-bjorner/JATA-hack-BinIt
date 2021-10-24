@@ -6,9 +6,7 @@ import {FormControlLabel, Checkbox, Button} from '@mui/material';
 import { db } from '../firebase-config';
 import { collection, getDocs } from '@firebase/firestore';
 
-import { formatRelative } from 'date-fns';
-
-import { createBin } from '../services/bin-service';
+import { createBin, deleteBin } from '../services/bin-service';
 
 import { GeoPoint } from '@firebase/firestore';
 import {
@@ -88,7 +86,7 @@ const Map = () => {
       setBinsLoaded(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getBins();
-  }, [load]);
+  }, [bins, load]);
 
   const createB = async (downvotes, lat, lng, materials, date, upvotes) => {
     await createBin(
@@ -115,6 +113,12 @@ const Map = () => {
     },
     [load]
   );
+
+  const onDeleteClick = async () => {
+    console.log(selected);
+    await deleteBin(selected.id);
+    setLoad(!load);
+  };
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -150,13 +154,8 @@ const Map = () => {
         onLoad={onMapLoad}
       >
         {binsLoaded.map((bin) => (
-          //   // DATA FROM FIREBASE
-          //   console.log(bin);
-          //   console.log(bin.location.latitude);
-          //   console.log(bin.location.longitude);
-          // }
           <Marker
-            key={`${bin.location.latitude}-${bin.location.longitude}`}
+            key={bin.id}
             position={{
               lat: bin.location.latitude,
               lng: bin.location.longitude,
@@ -170,25 +169,26 @@ const Map = () => {
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
             }}
-          />
-        ))}
-
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
-            onCloseClick={() => {
-              setSelected(null);
-            }}
           >
-            <div class="binInfoContent">
-              <h2>Recycling Bin</h2>
-              <h3>What you can put in it:</h3>
-              <p>cardboard, paper, plastic</p>
-              <p>Found {formatRelative(selected.time, new Date())}</p>
-              <button className="deleteButton">Delete</button>
-            </div>
-          </InfoWindow>
-        ) : null}
+            {selected === bin ? (
+              <InfoWindow
+                position={{ lat: selected.lat, lng: selected.lng }}
+                onCloseClick={() => {
+                  setSelected(null);
+                }}
+              >
+                <div class="binInfoContent">
+                  <h2>Recycling Bin</h2>
+                  <h3>What you can put in it:</h3>
+                  <p>cardboard, paper, plastic</p>
+                  <button className="deleteButton" onClick={onDeleteClick}>
+                    Delete
+                  </button>
+                </div>
+              </InfoWindow>
+            ) : null}
+          </Marker>
+        ))}
       </GoogleMap>
         
         <div>
