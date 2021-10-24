@@ -9,6 +9,13 @@ Resources used:
 - Google Auth with firebase (attempted but unused): This resource was available through our firebase account, and it allowed us to associate users with their gmail, email, or other multi media accounts for tracking. Initially we considered using this service to track different users and how they used and potentially abused the platform, however we abandoned this feature due to issues we couldn't resolve even with the help of peers and mentors. 
 - tutorials followed: https://www.youtube.com/watch?v=Oy1E85FhUiA, https://firebase.google.com/docs/auth/admin/errors, https://www.geeksforgeeks.org/how-to-authenticate-with-google-using-firebase-in-react/, https://firebase.google.com/docs/auth/web/google-signin#web-version-9_4
 - The firestore database contains the following fields
-- location : Geopoint
-- 
+- location : Geopoint(latitude, longitude)
+- timestamp : timestamp
+- recyclingMaterial : string
+- downvote : number
+- upvote : number
+
+location can be accesed by a document _lat, _lng
+id is inherent to every firebase document and serves as a unique key
+
 - Next Steps: 
