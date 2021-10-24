@@ -51,14 +51,6 @@ const Map = () => {
   //state for bins already loaded from firebase
   const [binsLoaded, setBinsLoaded] = useState([]);
   const binsCollectionRef = collection(db, 'bins');
-  //loads in all bins from firebase
-  useEffect(() => {
-    const getBins = async () => {
-      const data = await getDocs(binsCollectionRef);
-      setBinsLoaded(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getBins();
-  }, []);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -67,6 +59,15 @@ const Map = () => {
   const [bins, setBins] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
   const [load, setLoad] = React.useState(false);
+
+  //loads in all bins from firebase
+  useEffect(() => {
+    const getBins = async () => {
+      const data = await getDocs(binsCollectionRef);
+      setBinsLoaded(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getBins();
+  }, [load]);
 
   const createB = async (downvotes, lat, lng, materials, date, upvotes) => {
     await createBin(
@@ -78,23 +79,29 @@ const Map = () => {
     );
   };
 
-  const onMapClick = React.useCallback((e) => {
-    createB(0, e.latLng.lat(), e.latLng.lng(), 'everything', new Date(), 0);
-    setBins((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
-    setLoad(!load);
-    console.log(load);
-  }, []);
+  const onMapClick = React.useCallback(
+    (e) => {
+      createB(0, e.latLng.lat(), e.latLng.lng(), 'everything', new Date(), 0);
+      setBins((current) => [
+        ...current,
+        {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+          time: new Date(),
+        },
+      ]);
+      console.log(load);
+      setLoad(!load);
+      console.log(load);
+    },
+    [load]
+  );
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
+    console.log(binsLoaded);
+    console.log(bins);
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
