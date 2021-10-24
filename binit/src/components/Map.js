@@ -1,6 +1,6 @@
 import React from 'react';
 import mapStyles from './mapStyles';
-
+import Form from './Form';
 import { formatRelative } from 'date-fns';
 
 import {
@@ -195,6 +195,7 @@ function Search({ panTo }) {
 
   return (
     <div className="search">
+      <Form></Form>
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
@@ -212,6 +213,7 @@ function Search({ panTo }) {
         </ComboboxPopover>
       </Combobox>
     </div>
+    
   );
 }
 

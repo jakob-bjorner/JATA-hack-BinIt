@@ -29,4 +29,4 @@ const deleteBin = async (id) => {
     await deleteDoc(binDoc);
 }
 
-export {updateBin, createBin ,deleteBin} ;
+export {updateBin, createBin , deleteBin} ;

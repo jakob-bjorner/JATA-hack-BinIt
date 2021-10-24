@@ -9,6 +9,7 @@ const TestPage = () => {
       
       <TopBar />
       <Map />
+      
       <SignInButton />
     </div>
   );
