@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import mapStyles from './mapStyles';
 import Form from './Form'
 
+import {FormControlLabel, Checkbox, Button} from '@mui/material';
 import { db } from '../firebase-config';
 import { collection, getDocs } from '@firebase/firestore';
 
@@ -10,7 +11,6 @@ import { formatRelative } from 'date-fns';
 import { createBin } from '../services/bin-service';
 
 import { GeoPoint } from '@firebase/firestore';
-
 import {
   GoogleMap,
   useLoadScript,
@@ -49,7 +49,26 @@ const center = {
 };
 
 const Map = () => {
-  const [recycleType, setRecycleType] = useState();
+  const [checkboxes, setCheckboxes] = useState({
+        "Paper" : false,
+        "Glass" : false,
+        "Plastic" : false
+    });
+    
+  const handleChange = (event) => {
+        setCheckboxes({
+            ...checkboxes,
+            [event.target.name]: event.target.checked,
+        });
+    };
+
+  const submit = (event) => {
+      
+  }
+
+  const {Paper, Glass, Other} = checkboxes;
+
+  
   //state for bins already loaded from firebase
   const [binsLoaded, setBinsLoaded] = useState([]);
   const binsCollectionRef = collection(db, 'bins');
@@ -112,6 +131,8 @@ const Map = () => {
   if (loadError) return 'Error';
   if (!isLoaded) return 'Loading...';
 
+   
+    
   return (
     <div>
       <h1>Bins</h1>
@@ -169,7 +190,33 @@ const Map = () => {
           </InfoWindow>
         ) : null}
       </GoogleMap>
-      <Form props={setRecycleType}></Form>
+        
+        <div>
+            <FormControlLabel
+                control={
+                <Checkbox checked={Paper} onChange={handleChange} name="Paper" />
+                }
+                label="Paper"
+            />
+
+            <FormControlLabel
+                control={
+                <Checkbox checked={Glass} onChange={handleChange} name="Glass" />
+                }
+                label="Glass"
+            />
+
+            <FormControlLabel
+                control={
+                <Checkbox checked={Other} onChange={handleChange} name="Other" />
+                }
+                label="Other"
+            />
+            </div>
+            
+            <Button color="primary" variant= "contained" onClick={submit}>Submit</Button>
+            
+        
     </div>
   );
 };
