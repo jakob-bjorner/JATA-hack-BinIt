@@ -1,15 +1,12 @@
-import { React } from 'react';
-
-
-
-
+import { React } from "react";
+import Map from "./components/Map";
 
 const AddBinsPage = () => {
-    return (
-        <div>
-
-        </div>
-    )
-}
+  return (
+    <div>
+      <Map />
+    </div>
+  );
+};
 
 export default AddBinsPage;

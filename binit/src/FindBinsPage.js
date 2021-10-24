@@ -1,11 +1,12 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Map from "./components/Map";
 
 function FindBinsPage() {
-    return (
-        <div>
-            <h1>INSERT FINDING BINS MAP</h1>
-        </div>
-    );
+  return (
+    <div>
+      <Map />
+    </div>
+  );
 }
 export default FindBinsPage;

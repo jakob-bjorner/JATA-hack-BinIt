@@ -159,7 +159,7 @@ const Map = () => {
                 <div class="binInfoContent">
                   <h2>Recycling Bin</h2>
                   <h3>What you can put in it:</h3>
-                  <p>cardboard, paper, plastic</p>
+                  <p>{bin.recyclingMaterial}</p>
                   <button className="deleteButton" onClick={onDeleteClick}>
                     Delete
                   </button>

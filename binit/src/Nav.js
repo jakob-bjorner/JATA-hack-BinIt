@@ -28,9 +28,9 @@ function Nav() {
   return (
     <nav>
       <container className="nav-links">
-        <img className="logo" src="Logo.png" />
+        <img alt="recycling icon" className="logo" src="Logo.png" />
 
-        <Link to="/findbins">
+        <Link to="/">
           <button
             style={{ backgroundColor: findBinsButtonColor }}
             className="find-bins-button btn"
