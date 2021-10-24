@@ -1,0 +1,42 @@
+.App {
+    text-align: center;
+    background-color: #C1CFA0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 10vh;
+
+}
+@font-face {
+    font-family: Akira;
+    src: url(/Users/alimaazamat/Downloads/Hackathon/JATA-hack-BinIt/binit/src/Design Elements/Akira Expanded Demo.otf);
+}
+.find-bins-button {
+    border-color: #242914;
+    width: 40%;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: Akira;
+    font-size: 50px;
+    text-color: #242914;
+    background-color: #515F30;
+    border-radius: 10px;
+    border-width: 5px;
+}
+
+.add-bins-button {
+    border-color: #242914;
+    width: 40%;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: Akira;
+    font-size: 50px;
+    text-emphasis-color: #242914;
+    background-color: #8BA352;
+    border-radius: 10px;
+    border-width: 5px;
+
+}
