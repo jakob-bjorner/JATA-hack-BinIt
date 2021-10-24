@@ -1,0 +1,60 @@
+.App {
+  text-align: center;
+  background-color: #c1cfa0;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 10vh;
+}
+@font-face {
+  font-family: Akira;
+  src: url('./Design Elements/Akira Expanded Demo.otf');
+}
+
+.logo {
+  margin-top: 2vh;
+  margin-left: 3vh;
+  height: 17vh;
+  flex: start;
+  animation: rotation 10s infinite linear;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.find-bins-button {
+  border-color: #242914;
+  width: 40%;
+  margin-left: 50px;
+  margin-right: 20px;
+  font-family: Akira;
+  font-size: 50px;
+  text-color: #242914;
+  background-color: #515f30;
+  border-radius: 10px;
+  border-width: 5px;
+}
+.nav-links {
+  margin-left: 150px;
+  align-items: center;
+}
+.add-bins-button {
+  border-color: #242914;
+  width: 40%;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-family: Akira;
+  font-size: 50px;
+  text-emphasis-color: #242914;
+  background-color: #8ba352;
+  border-radius: 10px;
+  border-width: 5px;
+}

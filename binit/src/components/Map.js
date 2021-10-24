@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import mapStyles from './mapStyles';
 import Form from './Form'
+
+import { db } from '../firebase-config';
+import { collection, getDocs } from '@firebase/firestore';
+
 import { formatRelative } from 'date-fns';
+
+import { createBin } from '../services/bin-service';
+
+import { GeoPoint } from '@firebase/firestore';
 
 import {
   GoogleMap,
@@ -23,6 +31,7 @@ import {
 } from '@reach/combobox';
 
 import '@reach/combobox/styles.css';
+import { Firestore } from '@firebase/firestore';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -40,20 +49,10 @@ const center = {
 };
 
 const Map = () => {
-  // //state for bins already loaded from firebase
-  // const [ bins, setBins ] = useState([]);
-  // const usersCollectionRef = collection( db, "bins" );
-  // //loads in all bins from firebase
-  // useEffect(() => {
-  //   const getUsers = async() => {
-  //     const data = await getDocs(usersCollectionRef);
-  //     setBins(data.docs.map((doc) => ( {...doc.data(), id: doc.id } )));
-  //   }
-  //   getUsers();
-  // });
-  const { recycleType, setRecycleType } = React.useState();
-  
-  
+  const [recycleType, setRecycleType] = useState();
+  //state for bins already loaded from firebase
+  const [binsLoaded, setBinsLoaded] = useState([]);
+  const binsCollectionRef = collection(db, 'bins');
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -61,23 +60,48 @@ const Map = () => {
   });
   const [bins, setBins] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
+  const [load, setLoad] = React.useState(false);
 
-  const onMapClick = React.useCallback((e) => {
-    // FORM to get data
-    setBins((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
-    // DATA TO FIREBASE
-  }, []);
+  //loads in all bins from firebase
+  useEffect(() => {
+    const getBins = async () => {
+      const data = await getDocs(binsCollectionRef);
+      setBinsLoaded(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getBins();
+  }, [load]);
+
+  const createB = async (downvotes, lat, lng, materials, date, upvotes) => {
+    await createBin(
+      downvotes,
+      new GeoPoint(lat, lng),
+      materials,
+      date,
+      upvotes
+    );
+  };
+
+  const onMapClick = React.useCallback(
+    (e) => {
+      createB(0, e.latLng.lat(), e.latLng.lng(), 'everything', new Date(), 0);
+      setBins((current) => [
+        ...current,
+        {
+          lat: e.latLng.lat(),
+          lng: e.latLng.lng(),
+          time: new Date(),
+        },
+      ]);
+      setLoad(!load);
+    },
+    [load]
+  );
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
+    console.log(binsLoaded);
+    console.log(bins);
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
@@ -104,13 +128,20 @@ const Map = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {bins.map((marker) => (
-          // DATA FROM FIREBASE
+        {binsLoaded.map((bin) => (
+          //   // DATA FROM FIREBASE
+          //   console.log(bin);
+          //   console.log(bin.location.latitude);
+          //   console.log(bin.location.longitude);
+          // }
           <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
+            key={`${bin.location.latitude}-${bin.location.longitude}`}
+            position={{
+              lat: bin.location.latitude,
+              lng: bin.location.longitude,
+            }}
             onClick={() => {
-              setSelected(marker);
+              setSelected(bin);
             }}
             icon={{
               url: `/recycle-bin.svg`,
@@ -159,7 +190,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="/compass.svg" alt="compass" />
+      <img src="/compass.png" alt="compass" height="40px" />
     </button>
   );
 }

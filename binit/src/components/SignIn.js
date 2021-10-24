@@ -1,20 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import {
-  auth,
-  signInWithEmailAndPassword,
-  signInWithGoogle,
-} from "../firebase";
-// import { useAuthState } from "react-firebase-hooks/auth";
-import "./SignIn.css";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { auth } from "../firebase-config";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [user, loading, error] = useAuthState(auth);
-  const history = useHistory();
+  const [user, setUser] = useState(null);
 
-  return <div></div>;
+  const handleSignInRequest = () => {
+    signInAnonymously(auth)
+      .then(() => {
+        // signed in
+        console.log("signed in");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  if (user === null) {
+    handleSignInRequest();
+  }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (aUser) => {
+      if (aUser) {
+        setUser(aUser);
+        console.log("Auth state changed: " + aUser.uid);
+      } else {
+        console.log("user is not logged in!!!");
+        // user is signed out;
+      }
+    });
+  }, []);
 };
 
 export default SignIn;
