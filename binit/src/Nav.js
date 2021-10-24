@@ -27,7 +27,9 @@ function Nav() {
     
     return (
         <nav>
+            <img className="logo" src="Logo.png"/>
             <ul className="nav-links">
+            
                 <Link to='/findbins' > 
                     <button style={{backgroundColor : findBinsButtonColor}} className="find-bins-button" onClick={changeFindButtonColor}>
                     Find Bins
@@ -39,7 +41,6 @@ function Nav() {
                     </button>
                 </Link>
             </ul>
-            
         </nav>
     );
     
