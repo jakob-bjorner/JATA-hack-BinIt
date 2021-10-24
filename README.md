@@ -15,7 +15,10 @@ Resources used:
 - downvote : number
 - upvote : number
 
-location can be accesed by a document _lat, _lng
+location can be accesed by a document _lat, _lng,
 id is inherent to every firebase document and serves as a unique key
 
 - Next Steps: 
+  Expand community based features (point systems)
+  ML/AI cv features
+  
