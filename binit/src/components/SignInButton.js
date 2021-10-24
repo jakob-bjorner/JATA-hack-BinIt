@@ -1,12 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { auth } from "../firebase";
-import SignIn from "./SignIn";
+import autoSignIn from "./SignIn";
 const SignInButton = () => {
+  autoSignIn();
   return (
     <div>
       hey its the sign in button
-      <SignIn />
+      
     </div>
   );
 };

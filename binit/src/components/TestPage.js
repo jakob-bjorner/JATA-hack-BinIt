@@ -6,10 +6,8 @@ import TopBar from "./TopBar";
 const TestPage = () => {
   return (
     <div>
-      
       <TopBar />
       <Map />
-      <SignInButton />
     </div>
   );
 };

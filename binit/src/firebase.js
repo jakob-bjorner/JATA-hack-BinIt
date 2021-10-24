@@ -1,7 +1,6 @@
+// import firebase from "firebase";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// import firebase from "firebase";
-
 // const app = initializeApp({
 //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
 //   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -18,10 +17,10 @@ const firebaseConfig = {
   storageBucket: "bin-it-329914.appspot.com",
   messagingSenderId: "596782343725",
   appId: "1:596782343725:web:5e7340b0c7cbac6773faa4",
-  measurementId: "G-NP744LT74R"
+  measurementId: "G-NP744LT74R",
 };
-// initializeApp(firebaseConfig);
-// const auth = getAuth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 
-// export default app;
-export { firebaseConfig };
+export default app;
+export { auth };
