@@ -40,6 +40,20 @@ const center = {
 };
 
 const Map = () => {
+  // //state for bins already loaded from firebase
+  // const [ bins, setBins ] = useState([]);
+  // const usersCollectionRef = collection( db, "bins" );
+  // //loads in all bins from firebase
+  // useEffect(() => {
+  //   const getUsers = async() => {
+  //     const data = await getDocs(usersCollectionRef);
+  //     setBins(data.docs.map((doc) => ( {...doc.data(), id: doc.id } )));
+  //   }
+  //   getUsers();
+  // });
+
+  
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
