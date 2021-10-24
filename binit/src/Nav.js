@@ -3,11 +3,11 @@ import "./App.css";
 import { Link } from "react-router-dom";
 
 function Nav() {
-  const [findBinsButtonColor, setFindBinsButtonColor] = useState();
-  const [addBinsButtonColor, setAddBinsButtonColor] = useState();
+  const [findBinsButtonColor, setFindBinsButtonColor] = useState("#515F30");
+  const [addBinsButtonColor, setAddBinsButtonColor] = useState("#8BA352");
 
   function changeFindButtonColor() {
-    if (findBinsButtonColor == "#515F30") {
+    if (findBinsButtonColor === "#515F30") {
       setFindBinsButtonColor("#8BA352");
       setAddBinsButtonColor("#515F30");
     } else {
@@ -16,7 +16,7 @@ function Nav() {
     }
   }
   function changeAddButtonColor() {
-    if (addBinsButtonColor == "#515F30") {
+    if (addBinsButtonColor === "#515F30") {
       setAddBinsButtonColor("#8BA352");
       setFindBinsButtonColor("#515F30");
     } else {
@@ -41,7 +41,7 @@ function Nav() {
           src="Logo.png"
           //   style={{ position: "absolute", left: "10px", top: "10px" }}
         />
-        <div className="nav-links" style={{ height: "100px" }}>
+        <div className="nav-links">
           <Link to="/">
             <button
               style={{ backgroundColor: findBinsButtonColor }}
@@ -57,7 +57,7 @@ function Nav() {
               className="add-bins-button btn"
               onClick={changeAddButtonColor}
             >
-              Add Bins
+              About
             </button>
           </Link>
         </div>

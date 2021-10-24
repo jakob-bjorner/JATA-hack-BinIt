@@ -202,7 +202,7 @@ const Map = () => {
         ))}
       </GoogleMap>
 
-      <div>
+      <div style={{ backgroundColor: "#c1cfa0" }}>
         {Object.keys(checkboxes).map((type) => (
           <FormControlLabel
             control={
@@ -216,10 +216,6 @@ const Map = () => {
           />
         ))}
       </div>
-
-      {/* <Button color="primary" variant="contained" onClick={submit}>
-        Submit
-      </Button> */}
     </div>
   );
 };
