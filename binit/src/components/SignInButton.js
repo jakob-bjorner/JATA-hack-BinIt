@@ -1,7 +1,10 @@
 import React from "react";
-
+import { useState } from "react";
+import { auth } from "../firebase-config";
+import autoSignIn from "./SignIn";
 const SignInButton = () => {
-  return <div>Button Sign In</div>;
+  autoSignIn();
+  return <div>hey its the sign in button</div>;
 };
 
 export default SignInButton;

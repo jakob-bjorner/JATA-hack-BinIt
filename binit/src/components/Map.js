@@ -90,9 +90,7 @@ const Map = () => {
           time: new Date(),
         },
       ]);
-      console.log(load);
       setLoad(!load);
-      console.log(load);
     },
     [load]
   );

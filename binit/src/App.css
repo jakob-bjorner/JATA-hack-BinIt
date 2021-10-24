@@ -11,7 +11,7 @@ nav {
 }
 @font-face {
   font-family: Akira;
-  src: null;
+  src: url('./Design Elements/Akira Expanded Demo.otf');
 }
 
 .logo {
