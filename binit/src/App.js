@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import TestPage from "./components/TestPage";
+// import TestPage from "./components/TestPage";
 import Nav from "./Nav";
 import FindBinsPage from "./FindBinsPage";
 import AddBinsPage from "./AboutPageButton";
