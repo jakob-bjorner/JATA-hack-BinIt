@@ -192,7 +192,11 @@ const Map = () => {
                   <h2>Recycling Bin</h2>
                   <h3>What you can put in it:</h3>
                   <p>{bin.recyclingMaterial}</p>
-                  <button className="deleteButton" onClick={onDeleteClick}>
+                  <button
+                    className="deleteButton"
+                    onClick={onDeleteClick}
+                    style={{ backgroundColor: "#bf1630", borderRadius: "5px" }}
+                  >
                     Delete
                   </button>
                 </div>
