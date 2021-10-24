@@ -11,7 +11,7 @@ nav {
 }
 @font-face {
     font-family: Akira;
-    src: url(/Users/alimaazamat/Downloads/Hackathon/JATA-hack-BinIt/binit/src/Design Elements/Akira Expanded Demo.otf);
+    src: url("./Design Elements/Akira Expanded Demo.otf");
 }
 
 .logo {
